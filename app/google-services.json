@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "47141709731",
+    "project_id": "visitor-management-syste-f5ddc",
+    "storage_bucket": "visitor-management-syste-f5ddc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47141709731:android:be763d75289c1463ac9c16",
+        "android_client_info": {
+          "package_name": "com.aces.ipt.vms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3hDvYbhEl8peuT_Q-OVKLcAgUztHhLUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
