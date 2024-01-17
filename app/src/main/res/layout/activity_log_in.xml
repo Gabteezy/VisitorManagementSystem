@@ -27,6 +27,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,14 +60,14 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/gray"
+                android:text="Log In"
                 android:textColor="@color/white"
-                android:textSize="25dp"
-                android:text="Log In"/>
+                android:textSize="25dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,17 +77,19 @@
                 android:textColor="@color/black"
                 android:text="Don’t have an account?"
                 android:textSize="15dp" />
-
             <Button
-                android:id="@+id/signup"
+                android:id="@+id/btnSignup1"
                 android:layout_width="wrap_content"
-                android:textAllCaps="false"
-                android:layout_marginTop="-33dp"
-                android:layout_marginLeft="215dp"
-                android:textSize="15dp"
-                android:textColor="@color/gray"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"/>
+                android:layout_marginLeft="215dp"
+                android:layout_marginTop="-33dp"
+                android:text="Sign Up"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"
+                android:textColor="@color/gray"
+                android:textSize="15dp" />
+
+
         </LinearLayout>
 
 

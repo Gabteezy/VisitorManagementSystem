@@ -46,11 +46,12 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="25dp"
             android:textStyle="bold"
+            android:justificationMode="inter_word"
             android:text="Your personalized scheduling assistant for seamless appointments during your visit to Aces Tagum College, Inc."
             android:textSize="18dp" />
 
         <Button
-            android:id="@+id/started"
+            android:id="@+id/btnstarted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="get started"
