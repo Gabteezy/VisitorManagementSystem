@@ -6,27 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard">
 
-    <TextView
-        android:id="@+id/tvAppointments"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Appointments"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="370dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:text="Appointments"
+            android:textSize="32dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_marginTop="50dp"
+                android:textColor="@color/black"
+                android:text="Attended"
+                android:textSize="24dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/black"
+                    android:text="Upcoming"
+                    android:textSize="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textStyle="bold"
+                        android:layout_marginTop="50dp"
+                        android:textColor="@color/black"
+                        android:text="Skipped"
+                        android:textSize="24dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
