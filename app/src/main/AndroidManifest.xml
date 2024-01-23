@@ -15,6 +15,9 @@
         android:theme="@style/Theme.VMS"
         tools:targetApi="31">
         <activity
+            android:name=".loginUser"
+            android:exported="false" />
+        <activity
             android:name=".registratio"
             android:exported="false" />
         <activity
