@@ -16,7 +16,7 @@ class IndexActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnstarted.setOnClickListener {
-            val intent = Intent(this@IndexActivity, LogIn::class.java)
+            val intent = Intent(this@IndexActivity, loginUser::class.java)
             startActivity(intent)
         }
     }

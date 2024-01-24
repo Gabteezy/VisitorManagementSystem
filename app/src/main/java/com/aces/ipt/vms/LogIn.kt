@@ -17,7 +17,7 @@ class LogIn : AppCompatActivity() {
         binding = ActivityLogInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnLogin.setOnClickListener {
+        binding.btnLogin1.setOnClickListener {
             val intent = Intent(this@LogIn, Dashboard::class.java)
             startActivity(intent)
         }
@@ -25,16 +25,15 @@ class LogIn : AppCompatActivity() {
         binding.btnUser.setOnTouchListener { view, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    // Change the button color when pressed
                     binding.btnUser.setBackgroundColor(Color.RED)
                     true
                 }
                 MotionEvent.ACTION_UP -> {
-                    // Handle the click event here if needed
+
                     val intent = Intent(this@LogIn, loginUser::class.java)
                     startActivity(intent)
 
-                    // Revert the button color after starting the new activity
+
                     binding.btnUser.setBackgroundColor(Color.GRAY)
 
                     true

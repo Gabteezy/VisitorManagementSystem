@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "47141709731",
+    "firebase_url": "https://visitor-management-syste-f5ddc-default-rtdb.firebaseio.com",
     "project_id": "visitor-management-syste-f5ddc",
     "storage_bucket": "visitor-management-syste-f5ddc.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.aces.ipt.vms"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "47141709731-t2aesqnip0euq9j64dkcu6k61o96v5s5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aces.ipt.vms",
+            "certificate_hash": "45319c2976862368bcaa4809065ab43665734662"
+          }
+        },
+        {
+          "client_id": "47141709731-fu3c60uurkhq00df7lvhqrk5rr68mogn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA3hDvYbhEl8peuT_Q-OVKLcAgUztHhLUs"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47141709731-fu3c60uurkhq00df7lvhqrk5rr68mogn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

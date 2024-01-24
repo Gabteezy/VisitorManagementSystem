@@ -51,7 +51,7 @@
 
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/emailAdd1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -61,7 +61,7 @@
                 android:inputType="textEmailAddress" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/emailPass1"
                 android:layout_width="match_parent"
                 android:layout_marginTop="25dp"
                 android:textSize="15dp"
@@ -71,7 +71,7 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/btnLogin"
+                android:id="@+id/btnLogin1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"

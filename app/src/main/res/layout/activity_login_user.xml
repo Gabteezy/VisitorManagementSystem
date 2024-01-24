@@ -10,15 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-53dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@android:id/empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
             android:scaleType="center"
             android:src="@drawable/logo2" />
 
@@ -26,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
 
             <TextView
@@ -47,61 +44,89 @@
                 android:layout_marginTop="10dp"
                 android:text="Login with your user credentials."
                 android:textColor="@color/black"
-                android:textSize="14dp"/>
+                android:textSize="14dp" />
 
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/emailAdd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:textSize="18dp"
                 android:ems="15"
                 android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="18dp" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/emailPass"
                 android:layout_width="match_parent"
-                android:layout_marginTop="25dp"
-                android:textSize="15dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
                 android:ems="15"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/button_primary"
                 android:backgroundTint="@color/gray"
-                android:text="Log In"
+                android:text="LOGIN"
                 android:textColor="@color/white"
                 android:textSize="15dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:fontFamily="sans-serif-black"
+                android:text="OR"
                 android:textColor="@color/black"
-                android:text="Don’t have an account?"
-                android:textSize="12dp" />
+                android:textSize="20dp" />
 
-            <Button
-                android:id="@+id/btnSignup1"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLoginGoogle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="-33dp"
-                android:text="Sign Up"
-                android:background="@android:color/transparent"
-                android:textAllCaps="false"
-                android:textColor="@color/gray"
-                android:textSize="12dp" />
+                android:background="@drawable/button_primary"
+                android:drawableStart="@drawable/icon_google"
+                android:padding="10dp"
+                android:text="LOGIN WITH GOOGLE"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don’t have an account?"
+                    android:textColor="@color/black"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/btnSignup1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Sign Up as"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray"
+                    android:textSize="12dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,25 +134,25 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnLogin2"
+                    android:id="@+id/btnAdmin2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                    android:background="@drawable/button_secondary"
                     android:text="Admin"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
                 <Button
-                    android:id="@+id/btnLogin3"
+                    android:id="@+id/btnUser1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:textColor="@color/black"
                     android:layout_weight="1"
-                    android:text="User" />
+                    android:background="@drawable/button_secondary"
+                    android:text="User"
+                    android:textColor="@color/black" />
             </LinearLayout>
 
 
