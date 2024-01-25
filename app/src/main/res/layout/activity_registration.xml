@@ -4,66 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     tools:context=".Registration">
 
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteX="-53dp"
-    android:orientation="vertical"
-    tools:layout_editor_absoluteY="0dp">
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:layout_gravity="center"
+            android:layout_marginTop="100dp"
             android:text="Create an account"
             android:textColor="@color/black"
             android:textSize="35dp"
             android:textStyle="bold" />
 
-        <LinearLayout
+    </LinearLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/fullNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="12"
+        app:layout_constraintTop_toBottomOf="@id/titleLayout">
+
+        <EditText
+            android:id="@+id/firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="Firstname"
+            android:inputType="textEmailAddress" />
 
+        <EditText
+            android:id="@+id/middleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="Middlename"
+            android:inputType="textEmailAddress" />
 
-            <EditText
-                android:id="@+id/editTextTextEmailAddress2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="7"
-                android:hint="Lastname"
-                android:inputType="textEmailAddress" />
+        <EditText
+            android:id="@+id/LastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="Lastname"
+            android:inputType="textEmailAddress" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <EditText
-                android:id="@+id/editTextTextEmailAddress3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="7"
-                android:hint="Middlename"
-                android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/editTextTextEmailAddress4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="7"
-                android:hint="Firstname"
-                android:inputType="textEmailAddress" />
-
-
-
-        </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/infoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/fullNameLayout">
 
         <EditText
             android:id="@+id/editTextTextEmailAddress7"
@@ -105,32 +117,34 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/gray"
-            android:textColor="@color/white"
             android:layout_marginTop="20dp"
+            android:backgroundTint="@color/gray"
             android:text="Register"
-            android:textSize="15dp"/>
+            android:textColor="@color/white"
+            android:textSize="15dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
             android:layout_marginTop="30dp"
-            android:textColor="@color/black"
             android:text="Don’t have an account?"
+            android:textColor="@color/black"
             android:textSize="15dp" />
 
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="wrap_content"
-            android:background="@android:color/transparent"
-            android:textAllCaps="false"
-            android:layout_marginTop="-33dp"
-            android:layout_marginLeft="215dp"
-            android:textSize="15dp"
-            android:textColor="@color/gray"
             android:layout_height="wrap_content"
-            android:text="Sign In"/>
+            android:layout_marginLeft="215dp"
+            android:layout_marginTop="-33dp"
+            android:background="@android:color/transparent"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            android:textColor="@color/gray"
+            android:textSize="15dp" />
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

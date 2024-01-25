@@ -5,7 +5,10 @@ import android.content.Intent
 import android.content.IntentSender
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -14,7 +17,20 @@ import com.aces.ipt.vms.databinding.ActivityLoginUserBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.Firebase
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class loginUser : AppCompatActivity() {
 
@@ -25,8 +41,29 @@ class loginUser : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
 
-    private lateinit var oneTapClient: SignInClient
-    private lateinit var signInRequest: BeginSignInRequest
+
+
+    private lateinit var credential: AuthCredential
+    private lateinit var gmail: String
+
+
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    private var firebaseDatabaseReference: DatabaseReference = FirebaseDatabase.getInstance()
+        .getReferenceFromUrl("https://visitor-management-syste-f5ddc-default-rtdb.firebaseio.com/")
+
+    private lateinit var userName: String
+    private var userType = "UNKNOWN"
+
+
+    companion object {
+        private const val TAG = "GoogleActivity"
+
+        //9001
+        private const val RC_SIGN_IN = 9001
+
+    }
 
 
     private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
@@ -36,24 +73,16 @@ class loginUser : AppCompatActivity() {
         binding = ActivityLoginUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        firebaseAuth = Firebase.auth
 
-
-        oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.builder()
-            .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
-                .setSupported(true)
-                .build())
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(getString(R.string.app_client_id))
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(false)
-                    .build())
-            // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.app_client_id))
+//            .requestIdToken(BuildConfig.WEB_CLIENT_ID)
+            .requestEmail()
             .build()
+
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
 
         binding.btnAdmin2.setOnClickListener {
@@ -63,29 +92,8 @@ class loginUser : AppCompatActivity() {
 
         binding.btnLoginGoogle.setOnClickListener {
 
-
-
-           /* oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener(this) { result ->
-                    try {
-//                        startIntentSenderForResult(
-//                            result.pendingIntent.intentSender, 1,
-//                            null, 0, 0, 0, null)
-
-                        val intent = Intent(this, Dashboard::class.java)
-                        startActivity(intent)
-                        finish()
-
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e("OnSuccess ONE_TAP_LOGIN", "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener(this) { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d("OnFailure ONE_TAP_LOGIN", e.localizedMessage)
-                }
-            */
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
 
         }
 
@@ -118,42 +126,139 @@ class loginUser : AppCompatActivity() {
             }
         }
     }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when (requestCode) {
-            REQ_ONE_TAP -> {
-                try {
-                    val credential = oneTapClient.getSignInCredentialFromIntent(data)
-                    val idToken = credential.googleIdToken
-                    val username = credential.id
-                    val password = credential.password
-                    when {
-                        idToken != null -> {
-                            // Got an ID token from Google. Use it to authenticate
-                            // with your backend.
-                            Log.d("REQ_ONE_TAP", "Got ID token.")
-                        }
-                        password != null -> {
-                            // Got a saved username and password. Use them to authenticate
-                            // with your backend.
-                            Log.d("REQ_ONE_TAP", "Got password.")
-                        }
-                        else -> {
-                            // Shouldn't happen.
-                            Log.d("REQ_ONE_TAP", "No ID token or password!")
-                        }
-                    }
-                } catch (e: ApiException) {
-                    Log.d("REQ_ONE_TAP EXCEPTION", e.message!!)
-                    // ...
-                }
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode==RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+//                Toast.makeText(this, "GOOGLE_SIGN_IN_SUCCESS ${account.id}",Toast.LENGTH_SHORT).show()
+                Log.d("onActivityResult", "firebaseAuthWithGoogle:" + account.id)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Toast.makeText(this, "ApiException ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.d("onActivityResult", "Google sign in failed", e)
             }
         }
     }
-    // ...
 
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        credential = GoogleAuthProvider.getCredential(idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnSuccessListener { _ ->
+                // Sign in success
+                Log.d(TAG, "firebaseAuthWithGoogle: LoggedIN")
+                // Sign in success, update UI with the signed-in user's information
+                val user = firebaseAuth.currentUser
+                Log.d(TAG, "firebaseAuthWithGoogle: LoggedIN ${user!=null}")
+                if (user!=null) {
+                    val uid = user.uid
+                    val email = user.email
+
+//                    if(authResult.additionalUserInfo!!.isNewUser){} //Check if LoggedIn User is new
+                    setGmail(email!!)
+                    /*Toast.makeText(
+                        this,
+                        "GOOGLE_SIGN_IN_SUCCESS: ${user.displayName}",
+                        Toast.LENGTH_SHORT
+                    ).show()*/
+                    Log.d(TAG, "GOOGLE_SIGN_IN_SUCCESS: ${user.displayName}")
+
+                    checkUserAccount()
+                }else{
+                    Log.d(TAG, "firebaseAuthWithGoogle: NULL")
+                }
+
+            }
+            .addOnFailureListener { authResult ->
+
+                // If sign in fails, display a message to the user.
+                Toast.makeText(
+                    this,
+                    "GOOGLE_SIGN_IN_FAIL ${authResult.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                Log.d(TAG, "firebaseAuthWithGoogle:failure ${authResult.message}")
+
+            }
+    }
+
+    private fun setGmail(gmail: String) {
+        this.gmail = gmail
+    }
+    private fun checkUserAccount() {
+        binding.loading.visibility = View.VISIBLE
+        Toast.makeText(this, "Checking Account...", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "firebaseAuthWithGoogle: Checking User Account!")
+        firebaseDatabaseReference.child("User")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    Log.d(TAG, "firebaseAuthWithGoogle: Checking User if ${firebaseAuth.currentUser!!.uid} Exist!")
+                    if (snapshot.hasChild(firebaseAuth.currentUser!!.uid)) {
+
+                        Log.d(TAG, "firebaseAuthWithGoogle: Retrieving User Details")
+                        this@loginUser.userType =
+                            snapshot.child(firebaseAuth.currentUser!!.uid).child("usertype")
+                                .getValue(String::class.java).toString()
+                        this@loginUser.userName =
+                            snapshot.child(firebaseAuth.currentUser!!.uid).child("Firstname")
+                                .getValue(String::class.java).toString() +" "+ snapshot.child(firebaseAuth.currentUser!!.uid).child("Lastname").getValue(String::class.java).toString()
+
+                        Log.d(TAG, "firebaseAuthWithGoogle:User Details ${"$userType - $userName"} Exist!")
+                        logged()
+
+//                        val isVerified: Boolean =
+//                            snapshot.child(firebaseAuth.currentUser!!.uid).child("verified")
+//                                .getValue(Boolean::class.java)!!
+//                        checkIfVerified(isVerified)
+                    } else {
+                        Log.d(TAG, "firebaseAuthWithGoogle: User not Registered")
+                        binding.loading.visibility = View.GONE
+                        Toast.makeText(this@loginUser, "User not registered", Toast.LENGTH_SHORT);
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    binding.loading.visibility = View.GONE
+                    Log.d(TAG, "firebaseAuthWithGoogle: Error Checking User due to ${error.message}")
+                    Toast.makeText(
+                        this@loginUser,
+                        "onCancelled due to : "+ error.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+
+    }
+
+    private fun logged() {
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            binding.loading.visibility = View.GONE
+
+            if(userType == "User"){
+
+                Log.d(TAG, "firebaseAuthWithGoogle: Hi $userName you Logged In as User Staff")
+                Toast.makeText(this, "Logged In as User Staff", Toast.LENGTH_LONG);
+
+                val intent = Intent(this, Dashboard::class.java)
+                startActivity(intent)
+                finish()
+
+
+            }else if(userType == "Staff"){
+
+                Toast.makeText(this, "Logged In as User Staff", Toast.LENGTH_LONG);
+            }else{
+                Toast.makeText(this, "Logged In as User Admin", Toast.LENGTH_LONG);
+            }
+
+        }, 3000) // 3000 is the delayed time in milliseconds.
+    }
 
 }
