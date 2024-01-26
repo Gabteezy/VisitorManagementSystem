@@ -8,25 +8,17 @@ import java.util.Date
 
 data class User(
     val uid: String? = null,
-    val email: String? = null,
-    val type: String? = null,
-    val firstname: String? = null,
-    val lastname: String? = null,
-    val sex: String? = null,
     val address: String? = null,
-    val city: String? = null,
-    val state: String? = null,
-    val zipCode: String? = null,
-    val country: String? = null,
+    val email: String? = null,
+    val firstname: String? = null,
+    val depId: String? = null,
+    val lastname: String? = null,
     val phone: String? = null,
+    val type: String? = null,
     val verified: Boolean? = null,
     val datetimeCreated: String? = SimpleDateFormat("yyyy-MM-d HH:mm:ss").format(Date()),
     val datetimeUpdated: String? = SimpleDateFormat("yyyy-MM-d HH:mm:ss").format(Date()),): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -43,17 +35,13 @@ data class User(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(uid)
-        parcel.writeString(email)
-        parcel.writeString(type)
-        parcel.writeString(firstname)
-        parcel.writeString(lastname)
-        parcel.writeString(sex)
         parcel.writeString(address)
-        parcel.writeString(city)
-        parcel.writeString(state)
-        parcel.writeString(zipCode)
-        parcel.writeString(country)
+        parcel.writeString(email)
+        parcel.writeString(firstname)
+        parcel.writeString(depId)
+        parcel.writeString(lastname)
         parcel.writeString(phone)
+        parcel.writeString(type)
         parcel.writeValue(verified)
         parcel.writeString(datetimeCreated)
         parcel.writeString(datetimeUpdated)
@@ -72,6 +60,6 @@ data class User(
             return arrayOfNulls(size)
         }
     }
-
-
 }
+
+

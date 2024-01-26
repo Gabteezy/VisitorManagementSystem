@@ -168,6 +168,7 @@ class loginUser : AppCompatActivity() {
                     ).show()*/
                     Log.d(TAG, "GOOGLE_SIGN_IN_SUCCESS: ${user.displayName}")
 
+
                     checkUserAccount()
                 }else{
                     Log.d(TAG, "firebaseAuthWithGoogle: NULL")
