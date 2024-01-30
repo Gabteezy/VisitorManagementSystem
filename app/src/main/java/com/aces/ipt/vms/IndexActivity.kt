@@ -102,11 +102,11 @@ class IndexActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Logged In as User Staff", Toast.LENGTH_LONG);
             binding.loading.visibility = View.GONE
-            val intent = Intent(this, Dashboard::class.java)
+           /* val intent = Intent(this, Dashboard::class.java)
             startActivity(intent)
             finish()
-
-            val databaseRef = firebaseDatabase.reference.child("User")
+            */
+            val databaseRef = firebaseDatabase.reference.child("user")
                 .child(firebaseAuth.currentUser!!.uid)
 
             databaseRef.get().addOnCompleteListener { dataSnapshot ->
@@ -117,25 +117,30 @@ class IndexActivity : AppCompatActivity() {
                     if (user!=null) {
 
                         userType = user!!.type!!
-
-
                         val isVerified = user!!.verified
 
-
-
+                        Log.d("CURRENT_USER", "IS A(n) $userType")
 
                         if(userType == "User"){
-                            Toast.makeText(this, "Logged In as User Staff", Toast.LENGTH_LONG);
                             binding.loading.visibility = View.GONE
-                            val intent = Intent(this, Dashboard::class.java)
+                            Log.d("CURRENT_USER", "USER")
+                            Toast.makeText(this, "Logged In as User", Toast.LENGTH_LONG);
+                        }else if(userType == "Staff"){
+                            binding.loading.visibility = View.GONE
+                            Log.d("CURRENT_USER", "STAFF")
+                            Toast.makeText(this, "Logged In as STAFF", Toast.LENGTH_LONG);
+                            val intent = Intent(this@IndexActivity, Dashboard::class.java)
+                            intent.putExtra("user", userType)
                             startActivity(intent)
                             finish()
-                        }else if(userType == "Staff"){
-                            Toast.makeText(this, "Logged In as User Staff", Toast.LENGTH_LONG);
-                            binding.loading.visibility = View.GONE
                         }else{
-                            Toast.makeText(this, "Logged In as User Admin", Toast.LENGTH_LONG);
                             binding.loading.visibility = View.GONE
+                            Log.d("CURRENT_USER", "USER ADMIN")
+                            Toast.makeText(this, "Logged In as User Admin", Toast.LENGTH_LONG);
+                            val intent = Intent(this@IndexActivity, Dashboard::class.java)
+                            intent.putExtra("user", userType)
+                            startActivity(intent)
+                            finish()
                         }
 
                     }else{

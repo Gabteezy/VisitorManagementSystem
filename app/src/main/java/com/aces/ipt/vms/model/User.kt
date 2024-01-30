@@ -8,10 +8,11 @@ import java.util.Date
 
 data class User(
     val uid: String? = null,
+    val depId: String? = null,
     val address: String? = null,
     val email: String? = null,
     val firstname: String? = null,
-    val depId: String? = null,
+    val middlename: String? = null,
     val lastname: String? = null,
     val phone: String? = null,
     val type: String? = null,
@@ -19,6 +20,7 @@ data class User(
     val datetimeCreated: String? = SimpleDateFormat("yyyy-MM-d HH:mm:ss").format(Date()),
     val datetimeUpdated: String? = SimpleDateFormat("yyyy-MM-d HH:mm:ss").format(Date()),): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -35,10 +37,11 @@ data class User(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(uid)
+        parcel.writeString(depId)
         parcel.writeString(address)
         parcel.writeString(email)
         parcel.writeString(firstname)
-        parcel.writeString(depId)
+        parcel.writeString(middlename)
         parcel.writeString(lastname)
         parcel.writeString(phone)
         parcel.writeString(type)
@@ -51,6 +54,10 @@ data class User(
         return 0
     }
 
+    override fun toString(): String {
+        return "User(uid=$uid, depId=$depId, address=$address, email=$email, firstname=$firstname, middlename=$middlename, lastname=$lastname, phone=$phone, type=$type, verified=$verified, datetimeCreated=$datetimeCreated, datetimeUpdated=$datetimeUpdated)"
+    }
+
     companion object CREATOR : Parcelable.Creator<User> {
         override fun createFromParcel(parcel: Parcel): User {
             return User(parcel)
@@ -61,5 +68,3 @@ data class User(
         }
     }
 }
-
-

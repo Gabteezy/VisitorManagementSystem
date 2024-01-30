@@ -134,7 +134,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnAdmin2"
+                    android:id="@+id/btnAdmin"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -145,7 +145,7 @@
                     android:textSize="15dp" />
 
                 <Button
-                    android:id="@+id/btnUser1"
+                    android:id="@+id/btnUser"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
