@@ -24,13 +24,13 @@ class Dashboard : AppCompatActivity() {
     private lateinit var bundle: Bundle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
         Log.d("DASHBOARD", "GET EXTRAS")
         val bundle = intent.extras
+
 
 // getting the string back
         userType = bundle!!.getString("user").toString()
